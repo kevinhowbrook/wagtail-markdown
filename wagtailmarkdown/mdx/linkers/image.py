@@ -24,10 +24,7 @@ except ImportError:  # wagtail >= 2.0
 
 class Linker(object):
     def run(self, fname, optstr):
-        opts = {}
-
-        opts['spec'] = 'width-500'
-        opts['classname'] = 'left'
+        opts = {'spec': 'width-500', 'classname': 'left'}
 
         for opt in optstr:
             bits = opt.split('=', 1)
@@ -37,12 +34,12 @@ class Linker(object):
             if len(bits) > 1:
                 value = bits[1]
 
-            if opt == 'left':
+            if opt == 'full':
+                opts['classname'] = 'full-width'
+            elif opt == 'left':
                 opts['classname'] = 'left'
             elif opt == 'right':
                 opts['classname'] = 'right'
-            elif opt == 'full':
-                opts['classname'] = 'full-width'
             elif opt == 'width':
                 try:
                     opts['spec'] = "width-%d" % int(value)

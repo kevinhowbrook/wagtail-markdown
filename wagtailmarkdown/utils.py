@@ -39,116 +39,96 @@ def _sanitise_markdown_html(markdown_html):
 
 
 def _get_bleach_kwargs():
-    bleach_kwargs = {}
-    bleach_kwargs['tags'] = [
-        'p',
-        'div',
-        'span',
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'h5',
-        'h6',
-        'tt',
-        'pre',
-        'em',
-        'strong',
-        'ul',
-        'li',
-        'dl',
-        'dd',
-        'dt',
-        'code',
-        'img',
-        'a',
-        'table',
-        'tr',
-        'th',
-        'td',
-        'tbody',
-        'caption',
-        'colgroup',
-        'thead',
-        'tfoot',
-        'blockquote',
-        'ol',
-        'hr',
-        'br',
-    ]
-    bleach_kwargs['attributes'] = {
-        '*': [
-            'class',
-            'style',
-            'id',
+    return {
+        'tags': [
+            'p',
+            'div',
+            'span',
+            'h1',
+            'h2',
+            'h3',
+            'h4',
+            'h5',
+            'h6',
+            'tt',
+            'pre',
+            'em',
+            'strong',
+            'ul',
+            'li',
+            'dl',
+            'dd',
+            'dt',
+            'code',
+            'img',
+            'a',
+            'table',
+            'tr',
+            'th',
+            'td',
+            'tbody',
+            'caption',
+            'colgroup',
+            'thead',
+            'tfoot',
+            'blockquote',
+            'ol',
+            'hr',
+            'br',
         ],
-        'a': [
-            'href',
-            'target',
-            'rel',
-        ],
-        'img': [
-            'src',
-            'alt',
-        ],
-        'tr': [
-            'rowspan',
-            'colspan',
-        ],
-        'td': [
-            'rowspan',
-            'colspan',
-            'align',
+        'attributes': {
+            '*': ['class', 'style', 'id',],
+            'a': ['href', 'target', 'rel',],
+            'img': ['src', 'alt',],
+            'tr': ['rowspan', 'colspan',],
+            'td': ['rowspan', 'colspan', 'align',],
+        },
+        'styles': [
+            'color',
+            'background-color',
+            'font-family',
+            'font-weight',
+            'font-size',
+            'width',
+            'height',
+            'text-align',
+            'border',
+            'border-top',
+            'border-bottom',
+            'border-left',
+            'border-right',
+            'padding',
+            'padding-top',
+            'padding-bottom',
+            'padding-left',
+            'padding-right',
+            'margin',
+            'margin-top',
+            'margin-bottom',
+            'margin-left',
+            'margin-right',
         ],
     }
-    bleach_kwargs['styles'] = [
-        'color',
-        'background-color',
-        'font-family',
-        'font-weight',
-        'font-size',
-        'width',
-        'height',
-        'text-align',
-        'border',
-        'border-top',
-        'border-bottom',
-        'border-left',
-        'border-right',
-        'padding',
-        'padding-top',
-        'padding-bottom',
-        'padding-left',
-        'padding-right',
-        'margin',
-        'margin-top',
-        'margin-bottom',
-        'margin-left',
-        'margin-right',
-    ]
-    return bleach_kwargs
 
 
 def _get_markdown_kwargs():
-    markdown_kwargs = {}
-    markdown_kwargs['extensions'] = [
-        'extra',
-        'codehilite',
-        tables.TableExtension(),
-        linker.LinkerExtension({
-             '__default__': 'wagtailmarkdown.mdx.linkers.page',
-             'page:': 'wagtailmarkdown.mdx.linkers.page',
-             'image:': 'wagtailmarkdown.mdx.linkers.image',
-             'doc:': 'wagtailmarkdown.mdx.linkers.document',
-         })
-    ]
-    markdown_kwargs['extension_configs'] = {
-        'codehilite': [
-            ('guess_lang', False),
-        ]
+    return {
+        'extensions': [
+            'extra',
+            'codehilite',
+            tables.TableExtension(),
+            linker.LinkerExtension(
+                {
+                    '__default__': 'wagtailmarkdown.mdx.linkers.page',
+                    'page:': 'wagtailmarkdown.mdx.linkers.page',
+                    'image:': 'wagtailmarkdown.mdx.linkers.image',
+                    'doc:': 'wagtailmarkdown.mdx.linkers.document',
+                }
+            ),
+        ],
+        'extension_configs': {'codehilite': [('guess_lang', False),]},
+        'output_format': 'html5',
     }
-    markdown_kwargs['output_format'] = 'html5'
-    return markdown_kwargs
 
 
 def render(text, context=None):
